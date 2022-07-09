@@ -8,6 +8,12 @@
   <router-link class="btn btn-secondary mx-2" :to="{
     name:'userCreate'
   }">Crear Usuario</router-link>
+  <router-link class="btn btn-success mx-2" :to="{
+    name:'userCreate'
+  }">Login</router-link>
+  <router-link class="btn btn-info mx-2" :to="{
+    name:'userCreate'
+  }">Chat</router-link>
 </div>
 <router-view/>
 </template>

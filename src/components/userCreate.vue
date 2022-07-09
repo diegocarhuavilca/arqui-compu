@@ -37,6 +37,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import { userService } from "@/services/users";
+import router from "@/router";
 
 export default defineComponent({
   name: "UserCreate",
@@ -49,7 +50,10 @@ export default defineComponent({
       password: "",
     });
     const crearUsuario = () => {
-      userService.create(user);
+      userService.create(user).then(()=>{
+        alert('Usuario creado')
+        router.push({name:'userList'})
+      });
     };
 
     return { user, crearUsuario };
