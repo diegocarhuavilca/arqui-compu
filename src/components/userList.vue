@@ -10,13 +10,13 @@
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="usuarios">
         <tr v-for="usuario in usuarios.data.body" :key="usuario.id">
           <th>{{ usuario.id }}</th>
           <td>{{ usuario.nombre }}</td>
           <td>{{ usuario.apellido }}</td>
           <td>
-            <button class="btn btn-info">edit</button>
+            <button class="btn btn-info" @click="$router.push({name:'userEdit',params:usuario})">edit</button>
           </td>
           <td>
             <button
@@ -24,6 +24,7 @@
               class="btn btn-danger"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
+              @click="id = usuario.id"
             >
               del
             </button>
@@ -50,8 +51,8 @@
                     ></button>
                   </div>
                   <div class="modal-body">
-                    Desea borrar el usuario : 
-                    {{usuario.nombre}} - {{usuario.apellido}}
+                    Desea borrar el usuario :
+                    {{ usuario.nombre }} - {{ usuario.apellido }}
                   </div>
                   <div class="modal-footer">
                     <button
@@ -61,7 +62,12 @@
                     >
                       Close
                     </button>
-                    <button type="button" class="btn btn-danger">
+                    <button
+                      type="button"
+                      data-bs-dismiss="modal"
+                      class="btn btn-danger"
+                      @click="eliminarUsuario()"
+                    >
                       Borrar
                     </button>
                   </div>
@@ -84,11 +90,23 @@ export default defineComponent({
   components: {},
   setup() {
     const usuarios = ref();
+    const id = ref();
     userService.get().then((res) => {
       usuarios.value = res;
     });
+
+    const eliminarUsuario = () => {
+      userService.delete(id.value).then(() => {
+        alert("usuario eliminado");
+        userService.get().then((res) => {
+          usuarios.value = res;
+        });
+      });
+    };
     return {
       usuarios,
+      eliminarUsuario,
+      id,
     };
   },
 });

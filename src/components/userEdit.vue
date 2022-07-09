@@ -1,7 +1,6 @@
 <template>
   <div class="user-create mt-4">
-    <h5>Crear Usuario</h5>
-        
+    <h5>Editar Usuario</h5>
     <div v-if="loading">
           <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Id</label>
@@ -9,6 +8,7 @@
         type="text"
         class="form-control"
         v-model="user.id"
+        disabled
       />
     </div>
     <div class="mb-3">
@@ -28,11 +28,7 @@
         v-model="user.lastName"
       />
     </div>
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input type="password" class="form-control" v-model="user.password"/>
-    </div>
-    <button @click="crearUsuario()" class="btn btn-primary">Submit</button>
+    <button class="btn btn-primary" @click="actualizarUsuario()">Submit</button>
     </div>
 
     <div v-else>
@@ -45,29 +41,30 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
-import { userService } from "@/services/users";
+import { useRoute } from "vue-router";
+import { userService,userUpdate } from "@/services/users";
 import router from "@/router";
 
 export default defineComponent({
   name: "UserCreate",
   components: {},
   setup() {
-    const user = reactive({
-      id: "",
-      name: "",
-      lastName: "",
-      password: "",
-    });
+    const route = useRoute()
     const loading = ref(true)
-    const crearUsuario = () => {
-      loading.value = false
-      userService.create(user).then(()=>{
-        alert('Usuario creado')
-        router.push({name:'userList'})
-      });
-    };
+    const user = reactive({
+      id:route.params.id,
+      name:route.params.nombre,
+      lastName : route.params.apellido
+     } as userUpdate) 
 
-    return { user, crearUsuario ,loading};
+    const actualizarUsuario = () =>{
+      userService.update(user).then(()=>{
+        alert('Usuario Actualizado')
+        router.push({name:"userList"})
+      })
+    }
+
+    return {user,loading,actualizarUsuario};
   },
 });
 </script>
