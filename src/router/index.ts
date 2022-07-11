@@ -3,6 +3,9 @@ import HomeView from '../views/HomeView.vue'
 import userListVue from '@/components/userList.vue'
 import userCreate from '@/components/userCreate.vue'
 import userEditVue from '@/components/userEdit.vue'
+import loginUserVue from '@/components/loginUser.vue'
+import chat from '@/components/chat.vue'
+
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -22,6 +25,14 @@ const routes: Array<RouteRecordRaw> = [
         path:'edit',
         name:'userEdit',
         component: userEditVue
+      },{
+        path:'login',
+        name:"Login",
+        component:loginUserVue
+      },{
+        path:'chat',
+        name:"Chat",
+        component:chat,
       }
     ]
   },

@@ -15,6 +15,11 @@ export interface userUpdate{
   "lastName": string,
 }
 
+export interface userLogin{
+  "id": string,
+  "password": string,
+}
+
 export const userService = {
   async get() {
     return (await axios.get(api))
@@ -27,5 +32,8 @@ export const userService = {
   },
   async update(user:userUpdate){
     return axios.post(api,{id:user.id,name:user.name,lastName:user.lastName})
+  },
+  async login(user:userLogin){
+    return axios.post(`${api}/login`,{id:user.id,password:user.password})
   }
 }
