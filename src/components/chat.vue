@@ -41,7 +41,7 @@ export default defineComponent({
     }
 
     const socket = new WebSocket(
-      "wss://6b7r0rsw1g.execute-api.us-east-1.amazonaws.com/production"
+      "wss://hbqogrgnm8.execute-api.us-east-1.amazonaws.com/production"
     );
     const members = ref()
     const message = ref()
